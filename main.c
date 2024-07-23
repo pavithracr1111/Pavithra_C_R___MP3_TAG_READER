@@ -40,7 +40,7 @@ int main(int argc, char *argv[])
         printf("ERROR: ./a.out : INVALID ARGUMENTS\n");
         printf("USAGE : \n");
         printf("To view use : ./a.out -v mp3filename\n");
-        printf("To edit use : ./a.out -e  -t/-a/-A/-m/-y/-c mp3filename\n");
+        printf("To edit use : ./a.out -e  -t/-a/-A/-m/-y/-c newname mp3filename\n");
         printf("To get help use : ./a.out --help\n");
         printf("\n........................................................\n\n");
     }
