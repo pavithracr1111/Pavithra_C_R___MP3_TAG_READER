@@ -1,0 +1,10 @@
+MP3 tag reader is a software which will read and display MP3 (ID3) tag information from MP3 files. The software will be desktop based and not web based.
+
+This documents is the System Requirements Specification (SRS) for MP3 tag reader. The projectt will be useful to individuals who wish to view and collect mp3 tag data. This project can be extended to implement a tag editor, wherein users can modify mp3 tag information.
+
+Here we are using version - ID3v2.3
+
+References
+1. Wikipedia article on ID3 tag - http://en.wikipedia.org/wiki/ID3
+2. ID3 tag standard website - http://id3.org
+3. ID3 tag version 2.3 standard - http://id3.org/id3v2.3.0
