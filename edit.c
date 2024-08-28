@@ -1,7 +1,7 @@
 #include "edit.h"
 #include <string.h>
 
-// Function to edit music metadata information
+// Function to edit music metadata information and print only the edited content
 Status editInfo(Music *music, char *ch, char *name)
 {
     // Open the music file for reading
@@ -22,14 +22,50 @@ Status editInfo(Music *music, char *ch, char *name)
             // Read existing metadata from the file
             if (readInfo(music) == success)
             {
-                // Modify the tag based on user input
-                renametag(music, ch, name, fptr_dest);
+                // Modify the tag based on user input and get the edited tag type
+               // edittags tag = renametag(music, ch, name, fptr_dest);
+                
                 // Copy the modified content back to the original file
                 copytoriginal(music->fptr_fname, fptr_dest);
+
+                // Print only the edited content
+                switch (checkedit(ch))
+                {
+                    case t:
+                        printf("\nEdited Title: %s\n\n", name);
+                        break;
+                    case a:
+                        printf("\nEdited Album: %s\n\n", name);
+                        break;
+                    case A:
+                        printf("\nEdited Artist: %s\n\n", name);
+                        break;
+                    case y:
+                        printf("\nEdited Year: %s\n\n", name);
+                        break;
+                    case m:
+                        printf("\nEdited Genre: %s\n\n", name);
+                        break;
+                    case c:
+                        printf("\nEdited Comment: %s\n\n", name);
+                        break;
+                    default:
+                        printf("\nUnknown tag edited.\n\n");
+                        break;
+                }
             }
         }
+        if (fptr_dest != NULL)
+        {
+            fclose(fptr_dest);  // Ensure the file is closed
+            remove("sample.mp3");  // Remove the temporary file only after closing
+        }
     }
+
+    return success;
 }
+
+
 
 // Function to rename a specific tag (title, album, artist, etc.) in the MP3 metadata
 Status renametag(Music *music, char *ch, char *name, FILE *fptr_dest)
@@ -133,19 +169,23 @@ Status copyheader(FILE *fname, FILE *fptr_dest)
     return success;
 }
 
-// Function to copy modified content back to the original MP3 file
 Status copytoriginal(FILE *fname, FILE *fptr_dest)
 {
+    if (fname == NULL || fptr_dest == NULL)
+    {
+        return failure;  // Ensure pointers are valid
+    }
+
     rewind(fname);     // Go to the start of the original file
     rewind(fptr_dest); // Go to the start of the destination file
     char ch;
+
     // Copy content from the temporary file to the original file
     while (fread(&ch, 1, 1, fptr_dest) > 0)
     {
         fwrite(&ch, 1, 1, fname);
     }
-    fclose(fptr_dest);    // Close the temporary file
-    remove("sample.mp3"); // Remove the temporary file
+
     return success;
 }
 

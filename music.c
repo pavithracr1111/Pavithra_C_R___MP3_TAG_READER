@@ -21,8 +21,8 @@ void printHelp()
     printf("1. -v -> to view mp3 file contents\n");
     printf("2. -e -> to edit mp3 file contents\n");
     printf(" 2.1. -t -> to edit song title\n");
-    printf(" 2.2. -a -> to edit artist name\n");
-    printf(" 2.3. -A -> to edit album name\n");
+    printf(" 2.2. -A -> to edit artist name\n");
+    printf(" 2.3. -a -> to edit album name\n");
     printf(" 2.4. -y -> to edit song year\n");
     printf(" 2.5. -m -> to edit song content\n");
     printf(" 2.6. -c -> to edit song comment\n");
