@@ -5,7 +5,7 @@
 Status editInfo(Music *music, char *ch, char *name);
 
 /* Rename a specific tag in the MP3 metadata */
-Status renametag(Music *music, char *ch, char *name, FILE *fptr_dest);
+edittags renametag(Music *music, char *ch, char *name, FILE *fptr_dest);
 
 /* Copy the MP3 file header from the original file to the destination file */
 Status copyheader(FILE *fname, FILE *fptr_dest);

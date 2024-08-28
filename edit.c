@@ -23,13 +23,13 @@ Status editInfo(Music *music, char *ch, char *name)
             if (readInfo(music) == success)
             {
                 // Modify the tag based on user input and get the edited tag type
-               // edittags tag = renametag(music, ch, name, fptr_dest);
+               edittags tag = renametag(music, ch, name, fptr_dest);
                 
                 // Copy the modified content back to the original file
                 copytoriginal(music->fptr_fname, fptr_dest);
 
                 // Print only the edited content
-                switch (checkedit(ch))
+                switch (tag)
                 {
                     case t:
                         printf("\nEdited Title: %s\n\n", name);
@@ -67,51 +67,51 @@ Status editInfo(Music *music, char *ch, char *name)
 
 
 
-// Function to rename a specific tag (title, album, artist, etc.) in the MP3 metadata
-Status renametag(Music *music, char *ch, char *name, FILE *fptr_dest)
+edittags renametag(Music *music, char *ch, char *name, FILE *fptr_dest)
 {
-    // Copy the header of the MP3 file to the destination file
+    edittags tag = checkedit(ch);  // Get the tag type from the user input
     if (copyheader(music->fptr_fname, fptr_dest) == success)
     {
         // Determine which tag to edit based on user input
-        switch (checkedit(ch))
+        switch (tag)
         {
-        case t: // Modify title tag
-            copyContent(music->fptr_fname, music->pos[m_title], fptr_dest);
-            copynewcon(music->fptr_fname, name, fptr_dest);
-            copyremaining(music->fptr_fname, music->Title_size, fptr_dest);
-            break;
-        case a: // Modify album tag
-            copyContent(music->fptr_fname, music->pos[m_album], fptr_dest);
-            copynewcon(music->fptr_fname, name, fptr_dest);
-            copyremaining(music->fptr_fname, music->Album_size, fptr_dest);
-            break;
-        case A: // Modify artist tag
-            copyContent(music->fptr_fname, music->pos[m_artist], fptr_dest);
-            copynewcon(music->fptr_fname, name, fptr_dest);
-            copyremaining(music->fptr_fname, music->Artist_size, fptr_dest);
-            break;
-        case y: // Modify year tag
-            copyContent(music->fptr_fname, music->pos[m_year], fptr_dest);
-            copynewcon(music->fptr_fname, name, fptr_dest);
-            copyremaining(music->fptr_fname, music->Year_size, fptr_dest);
-            break;
-        case m: // Modify genre tag
-            copyContent(music->fptr_fname, music->pos[m_genre], fptr_dest);
-            copynewcon(music->fptr_fname, name, fptr_dest);
-            copyremaining(music->fptr_fname, music->Genre_size, fptr_dest);
-            break;
-        case c: // Modify comment tag
-            copyContent(music->fptr_fname, music->pos[m_comment], fptr_dest);
-            copynewcon(music->fptr_fname, name, fptr_dest);
-            copyremaining(music->fptr_fname, music->Com_size, fptr_dest);
-            break;
-        default:
-            break;
+            case t: // Modify title tag
+                copyContent(music->fptr_fname, music->pos[m_title], fptr_dest);
+                copynewcon(music->fptr_fname, name, fptr_dest);
+                copyremaining(music->fptr_fname, music->Title_size, fptr_dest);
+                break;
+            case a: // Modify album tag
+                copyContent(music->fptr_fname, music->pos[m_album], fptr_dest);
+                copynewcon(music->fptr_fname, name, fptr_dest);
+                copyremaining(music->fptr_fname, music->Album_size, fptr_dest);
+                break;
+            case A: // Modify artist tag
+                copyContent(music->fptr_fname, music->pos[m_artist], fptr_dest);
+                copynewcon(music->fptr_fname, name, fptr_dest);
+                copyremaining(music->fptr_fname, music->Artist_size, fptr_dest);
+                break;
+            case y: // Modify year tag
+                copyContent(music->fptr_fname, music->pos[m_year], fptr_dest);
+                copynewcon(music->fptr_fname, name, fptr_dest);
+                copyremaining(music->fptr_fname, music->Year_size, fptr_dest);
+                break;
+            case m: // Modify genre tag
+                copyContent(music->fptr_fname, music->pos[m_genre], fptr_dest);
+                copynewcon(music->fptr_fname, name, fptr_dest);
+                copyremaining(music->fptr_fname, music->Genre_size, fptr_dest);
+                break;
+            case c: // Modify comment tag
+                copyContent(music->fptr_fname, music->pos[m_comment], fptr_dest);
+                copynewcon(music->fptr_fname, name, fptr_dest);
+                copyremaining(music->fptr_fname, music->Com_size, fptr_dest);
+                break;
+            default:
+                break;
         }
     }
-    return success;
+    return tag;  // Return the tag that was modified
 }
+
 
 // Function to copy content up to a specific position in the file
 Status copyContent(FILE *fname, int pos, FILE *fptr_dest)
